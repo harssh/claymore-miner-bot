@@ -28,7 +28,7 @@ def contact_miner(r,ip,port):
             return(json.loads(data.decode('utf-8'))['result'])
 
 def is_owner(message):
-    if message.from_user.id == my_id:
+    if my_id.count(message.from_user.id) > 0:
         return True
     else:
         bot.reply_to(message, "https://github.com/albcp/claymore-miner-bot")
@@ -49,8 +49,9 @@ def check_status():
                     report += '\n*{}* is now *{}*'.format(rig[0], status)
             rigs_status[rig[0]] = status
         if report != '':
-            bot.send_message(my_id, report, parse_mode="markdown")
-            report = ''
+            for ids in mmy_id:
+                bot.send_message(ids, report, parse_mode="markdown")
+                report = ''
         time.sleep(60)
 
 @bot.message_handler(commands=['start','help'])
